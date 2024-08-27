@@ -1,7 +1,10 @@
 import type { NextRequest } from 'next/server'
-import { getRequestContext } from '@cloudflare/next-on-pages'
+import authOptions from "@/lib/auth"
+import NextAuth from "next-auth"
 
 export const runtime = 'edge'
+
+export default NextAuth(authOptions)
 
 export async function GET(request: NextRequest) {
   let responseText = 'Hello World'
