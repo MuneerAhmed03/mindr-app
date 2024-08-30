@@ -1,11 +1,18 @@
 import type { Metadata } from "next";
+import Link from "next/link"
 import { Inter } from "next/font/google";
-import { DM_Sans } from 'next/font/google'
+import { Bricolage_Grotesque } from 'next/font/google'
 import { Space_Mono } from 'next/font/google'
 import { cn } from '@/lib/utils'
 import "./globals.css";
 
 // const inter = Inter({ subsets: ["latin"] });
+
+const fontHeading = Bricolage_Grotesque({
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-heading',
+})
 
 const fontBody = Space_Mono({
   weight : '400',
@@ -13,11 +20,11 @@ const fontBody = Space_Mono({
   display: 'swap',
   variable: '--font-body',
 })
-const fontHeading = DM_Sans({
-  subsets: ['latin'],
-  display: 'swap',
-  variable: '--font-heading',
-})
+// const fontHeading = DM_Sans({
+//   subsets: ['latin'],
+//   display: 'swap',
+//   variable: '--font-heading',
+// })
 
 
 
@@ -41,6 +48,17 @@ export default function RootLayout({
       )}
     >
       {children}
+      <footer className="flex flex-col gap-2 sm:flex-row py-6 w-full shrink-0 items-center px-4 md:px-6 border-t">
+        <p className="text-xs text-gray-500 dark:text-gray-400">MindR.</p>
+        <nav className="sm:ml-auto flex gap-4 sm:gap-6">
+          <Link className="text-xs hover:underline underline-offset-4" href="#">
+            Terms of Service
+          </Link>
+          <Link className="text-xs hover:underline underline-offset-4" href="#">
+            Privacy
+          </Link>
+        </nav>
+      </footer>
     </body>
   </html>
   );
