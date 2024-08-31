@@ -1,19 +1,12 @@
 import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { verify, webcrypto } from "crypto";
+import { createClient } from "@supabase/supabase-js";
 
 const subtle = webcrypto.subtle;
 const encoder = new TextEncoder();
 
-interface TelegramCredentials {
-  id: string;
-  first_name: string;
-  last_name?: string;
-  username?: string;
-  photo_url?: string;
-  auth_date: string;
-  hash: string;
-}
+const supabase = createClient(process.env.SB_URL!, process.env.SB_KEY!);
 
 const botToken = process.env.TELEGRAM_BOT_TOKEN;
 
@@ -54,47 +47,56 @@ export const authOptions = {
           encoder.encode(datacheckstring)
         );
 
-        if (!isValid) {
+        if (!isValid || hasExpired(authMap)) {
           return null;
         }
 
-        if (hasExpired(authMap)) {
-          return null;
-        }
+        const dataObj = Object.fromEntries(authMap.entries());
 
-        const data = Object.fromEntries(authMap.entries());
+        const { error } = await supabase
+          .from("users")
+          .upsert(
+            dataObj,
+            { onConflict: "id",
+              ignoreDuplicates:false
+             },
+          )
+          
+        if(error){
+          console.log(error);
+        }  
 
         const tobeReturned = {
-          id: data.id,
-          username: data.first_name,
+          id: dataObj.id,
+          username: dataObj.first_name,
         };
 
         console.log(tobeReturned);
 
         return {
-          id: data.id,
-          username: data.first_name,
+          id: dataObj.id,
+          username: dataObj.first_name,
         };
       },
     }),
   ],
   secret: process.env.NEXTAUTH_SECRET,
   callbacks: {
-            jwt : async ({token,user}:any) =>{
-                if(user){
-                    token.id=user.id;
-                    token.username=user.username;
-                }
-                return token
-            },
-            session : async ({session,token}:any)=>{
-                if (token) {
-                    session.user.id = token.id;
-                    session.user.username=token.username;
-                  }
-                  return session
-            }
-        },
+    jwt: async ({ token, user }: any) => {
+      if (user) {
+        token.id = user.id;
+        token.username = user.username;
+      }
+      return token;
+    },
+    session: async ({ session, token }: any) => {
+      if (token) {
+        session.user.id = token.id;
+        session.user.username = token.username;
+      }
+      return session;
+    },
+  },
   pages: {
     signIn: "/signUp",
     error: "/auth/error",
