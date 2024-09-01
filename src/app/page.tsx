@@ -2,9 +2,13 @@ import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Brain, MessageCircle, Zap, Clock, Star } from "lucide-react"
+import { AuthWrapper } from "@/app/authwrapper"
+
+export const runtime = "edge";
 
 export default function Home() {
   return (
+    <AuthWrapper>
     <div className="flex flex-col  min-h-screen">
       <header className="px-4 border-b-2 lg:px-6 h-14 flex items-center">
         <Link className="flex items-center justify-center" href="#">
@@ -37,7 +41,7 @@ export default function Home() {
               </div>
               <div className="space-x-4">
                 <Button className="bg-primary text-primary-foreground">
-                <Link href= {`/signUp`} target="_blank" rel="noopener noreferrer">
+                <Link href= {`/onboard`} target="_blank" rel="noopener noreferrer">
                 Get Started
                 </Link>
                 </Button>
@@ -165,6 +169,18 @@ export default function Home() {
           </div>
         </section>
       </main>
+      <footer className="flex flex-col gap-2 sm:flex-row py-6 w-full shrink-0 items-center px-4 md:px-6 border-t">
+        <p className="text-xs text-gray-500 dark:text-gray-400">MindR.</p>
+        <nav className="sm:ml-auto flex gap-4 sm:gap-6">
+          <Link className="text-xs hover:underline underline-offset-4" href="/tos">
+            Terms of Service
+          </Link>
+          <Link className="text-xs hover:underline underline-offset-4" href="/privacy">
+            Privacy
+          </Link>
+        </nav>
+      </footer>
     </div>
+    </AuthWrapper>
   )
 }

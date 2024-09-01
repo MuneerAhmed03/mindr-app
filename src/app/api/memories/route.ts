@@ -1,27 +1,71 @@
-// app/api/memories/route.ts
-import { NextResponse } from 'next/server'
 
-// This would typically come from a database
-const memories = [
-  { id: 1, text: "Remember to buy groceries: milk, eggs, bread, and vegetables for the week.", date: "2023-06-01" },
-  { id: 2, text: "Call mom on her birthday next Tuesday. Don't forget to ask about her garden!", date: "2023-06-02" },
-  // ... (include all 15 memories from the previous example)
-]
+import { NextResponse } from "next/server";
+import { createClient } from "@supabase/supabase-js";
+import { UUID } from "crypto";
+import { getServerSession } from "next-auth"
+import { authOptions } from "@/lib/auth";
 
 export async function GET(request: Request) {
-  const { searchParams } = new URL(request.url)
-  const page = parseInt(searchParams.get('page') || '1')
-  const limit = parseInt(searchParams.get('limit') || '10')
+  const session = await getServerSession(authOptions);
+  if(!session){
+    return NextResponse.json({ error: "Access Denied" }, { status: 403 });
+  }
 
-  const startIndex = (page - 1) * limit
-  const endIndex = page * limit
+  const supabase = createClient(process.env.SB_URL!, process.env.SB_KEY!);
+  const { searchParams } = new URL(request.url);
 
-  const results = memories.slice(startIndex, endIndex)
-  const totalPages = Math.ceil(memories.length / limit)
 
-  return NextResponse.json({
-    results,
-    currentPage: page,
-    totalPages,
-  })
+  const user_id = parseInt(session?.user?.id)
+  const from = parseInt(searchParams.get("from") || "0");
+  const to = parseInt(searchParams.get("to") || "0");
+
+  
+  if (!user_id) {
+    return NextResponse.json({ error: "User ID is required" }, { status: 400 });
+  }
+
+  try{
+  const { data, error,count } = await supabase
+    .from("memory")
+    .select("memory_id,content",{count : 'exact'})
+    .range(from, to)
+    .eq("user_id", user_id)
+    .order('created_at', { ascending: false });
+    if(error) throw error;
+    return NextResponse.json({data,count});
+}catch(error){
+  console.log("Error fetching memories",error);
+  return NextResponse.json(
+    {error: "failed to fetch memories"},
+    {status: 500}
+  );
 }
+}
+
+export async function DELETE(request: Request) {
+  const session = await getServerSession(authOptions);
+  if(!session){
+    return NextResponse.json({ error: "Access Denied" }, { status: 403 });
+  }
+  
+  const supabase = createClient(process.env.SB_URL!, process.env.SB_KEY!);
+
+  const data : {memory_id:string} = await request.json()
+
+  try{const {memory_id}=data;
+  const response = await supabase
+  .from('memory')
+  .delete()
+  .eq('memory_id',memory_id);
+
+  return NextResponse.json({"message" : response.statusText}
+    ,{status:response.status});
+  }catch(error){
+    console.log("Error deleting memories",error);
+  return NextResponse.json(
+    {error: "failed to fetch memories"},
+    {status: 500}
+  );
+  }
+}
+

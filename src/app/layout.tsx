@@ -5,6 +5,7 @@ import { Bricolage_Grotesque } from 'next/font/google'
 import { Space_Mono } from 'next/font/google'
 import { cn } from '@/lib/utils'
 import "./globals.css";
+import {Providers} from "@/app/provider"
 
 // const inter = Inter({ subsets: ["latin"] });
 
@@ -47,18 +48,9 @@ export default function RootLayout({
         fontBody.variable
       )}
     >
-      {children}
-      <footer className="flex flex-col gap-2 sm:flex-row py-6 w-full shrink-0 items-center px-4 md:px-6 border-t">
-        <p className="text-xs text-gray-500 dark:text-gray-400">MindR.</p>
-        <nav className="sm:ml-auto flex gap-4 sm:gap-6">
-          <Link className="text-xs hover:underline underline-offset-4" href="#">
-            Terms of Service
-          </Link>
-          <Link className="text-xs hover:underline underline-offset-4" href="#">
-            Privacy
-          </Link>
-        </nav>
-      </footer>
+      <Providers>
+          {children}
+      </Providers>
     </body>
   </html>
   );

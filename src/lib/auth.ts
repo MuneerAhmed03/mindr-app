@@ -2,6 +2,7 @@ import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { verify, webcrypto } from "crypto";
 import { createClient } from "@supabase/supabase-js";
+import { signOut } from "next-auth/react";
 
 const subtle = webcrypto.subtle;
 const encoder = new TextEncoder();
@@ -30,10 +31,11 @@ export const authOptions = {
         authMap.delete("json");
         authMap.delete("callbackUrl");
         authMap.delete("redirect");
+        authMap.delete("callback");
 
         const datacheckstring = getFinalDataStr(authMap);
 
-        console.log(datacheckstring);
+        console.log("datacheck",datacheckstring);
 
         const secretKey = await getSecretKey();
         const signature = new Uint8Array(
@@ -63,7 +65,7 @@ export const authOptions = {
           )
           
         if(error){
-          console.log(error);
+          console.log("db error",error);
         }  
 
         const tobeReturned = {
@@ -98,8 +100,9 @@ export const authOptions = {
     },
   },
   pages: {
-    signIn: "/signUp",
+    signIn: "/onboard",
     error: "/auth/error",
+    signOut:"/"
   },
   debug: true, // Enable debug mode to log additional details
 };
@@ -135,51 +138,3 @@ function hasExpired(authData: Map<string, string | number>) {
   return dataAge > 86400;
 }
 
-// export const authOptions = {
-//     providers: [
-//         CredentialsProvider({
-//             name:'Telegram',
-//             credentials:{} ,
-
-//             authorize: async (credentials) =>{
-//                 // const {hash,...data}=credentials as TelegramCredentials;
-//                 const authMap = new Map(Object.entries(credentials as Record<string,string> ));
-//                 const checkStirng = Object.keys(data).sort().map(key => `${key}=${data[key as keyof typeof data]}`).join('\n');
-
-//                 const secretKey =  crypto.createHash('sha256').update(botToken).digest();
-//                 const hmac = crypto.createHmac('sha256',secretKey).update(checkStirng).digest(`hex`);
-
-//                 if (hmac === hash) {
-//                     return {
-//                       id: data.id,
-//                       name: `${data.first_name} ${data.last_name || ''}`.trim(),
-//                       image: data.photo_url,
-//                       username: data.username
-//                     }
-//                   }
-
-//                 return null;
-//             }
-//         })
-//     ],
-//     callbacks:{
-//         jwt : async ({token,user}:any) =>{
-//             if(user){
-//                 token.id =user.id;
-//                 token.username=user.user.username;
-//             }
-//             return token
-//         },
-//         session : async ({session,token}:any)=>{
-//             if (token) {
-//                 session.user.id = token.id
-//               }
-//               return session
-//         }
-//     },
-//     pages: {
-//       signIn: '/signUp',
-//       error: '/auth/error',
-//     },
-//     debug: process.env.NODE_ENV === 'development',
-// }

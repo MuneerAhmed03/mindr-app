@@ -21,33 +21,57 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog"
 import { Memory } from '@/lib/types'
+import Skeleton, { SkeletonTheme } from 'react-loading-skeleton'
+import 'react-loading-skeleton/dist/skeleton.css'
+import axios from "axios"
 
-
-export default function MemoriesTable({ memories }: { memories: Memory[] }) {
+export default function MemoriesTable({ memories,isLoading }: { memories: Memory[],isLoading:boolean }) {
   const [localMemories, setLocalMemories] = useState<Memory[]>(memories ||[])
 
-  const deleteMemory = (id: number) => {
-    setLocalMemories(localMemories.filter(memory => memory.id !== id))
-    // In a real application, you would also make an API call to delete the memory on the server
+  const deleteMemory = async (id: number) => {
+    try{
+      const response = await axios.delete(`/api/memories?id=${id}`);
+      if (response.status === 200) {
+        setLocalMemories(localMemories.filter(memory => memory.id !== id));
+      }
+    }catch(error){
+      console.error('Failed to delete memory:', error)
+    }
   }
 
   const truncateText = (text: string, maxLength: number) => {
     return text.length > maxLength ? text.substring(0, maxLength) + "..." : text
   }
 
+
   return (
     <Table>
       <TableHeader>
         <TableRow>
-          <TableHead>Date</TableHead>
           <TableHead>Memory</TableHead>
-          <TableHead className="w-[100px]">Actions</TableHead>
+          <TableHead className="w-[100px]">Action</TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>
-        {localMemories.map((memory) => (
+        
+        {isLoading ? (
+          Array.from({ length: 5 }).map((_, index) => (
+            <TableRow key={index}>
+              <SkeletonTheme baseColor='#05172b' highlightColor='#062547' >
+              <TableCell><Skeleton width={400} /></TableCell>
+              <TableCell><Skeleton width={50} /></TableCell>
+              </SkeletonTheme>
+            </TableRow>
+          ))
+        ) :
+        
+        
+        (localMemories.length === 0 ?(
+          <TableRow>
+          <TableCell colSpan={3} className="text-center">You do not have any saved memories yet!!</TableCell>
+        </TableRow>
+        ):(localMemories.map((memory) => (
           <TableRow key={memory.id}>
-            <TableCell>{memory.date}</TableCell>
             <TableCell>
               <Dialog>
                 <DialogTrigger asChild>
@@ -76,7 +100,7 @@ export default function MemoriesTable({ memories }: { memories: Memory[] }) {
               </Button>
             </TableCell>
           </TableRow>
-        ))}
+        ))))}
       </TableBody>
     </Table>
   )
