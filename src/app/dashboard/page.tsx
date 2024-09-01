@@ -11,7 +11,7 @@ import {
   CardFooter,
 } from "@/components/ui/card";
 import MemoriesTable from "@/components/MemoriesTable";
-import { Memory } from "@/lib/types";
+import { Memory } from "@/types/types";
 import { AuthWrapper } from "@/app/authwrapper";
 import { useSession,signOut } from "next-auth/react";
 import axios from "axios";
