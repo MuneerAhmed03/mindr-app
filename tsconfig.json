@@ -18,7 +18,10 @@
       }
     ],
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["./src/*"],
+      "crypto": [
+      "./node_modules/crypto-js"
+    ]
     },
     "types": [
         "@cloudflare/workers-types/2023-07-01"

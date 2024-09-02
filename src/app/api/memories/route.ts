@@ -5,6 +5,9 @@ import { UUID } from "crypto";
 import { getServerSession } from "next-auth"
 import { authOptions } from "@/lib/auth";
 
+export const runtime = "edge";
+
+
 export async function GET(request: Request) {
   const session = await getServerSession(authOptions);
   if(!session){
