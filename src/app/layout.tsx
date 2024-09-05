@@ -5,7 +5,6 @@ import { Bricolage_Grotesque } from 'next/font/google'
 import { Space_Mono } from 'next/font/google'
 import { cn } from '@/lib/utils'
 import "./globals.css";
-import {Providers} from "@/app/provider"
 
 // const inter = Inter({ subsets: ["latin"] });
 
@@ -48,9 +47,7 @@ export default function RootLayout({
         fontBody.variable
       )}
     >
-      <Providers>
           {children}
-      </Providers>
     </body>
   </html>
   );

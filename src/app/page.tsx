@@ -2,13 +2,11 @@ import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Brain, MessageCircle, Zap, Clock, Star } from "lucide-react"
-import { AuthWrapper } from "@/app/authwrapper"
 
-export const runtime = "edge";
+// export const runtime = "edge";
 
 export default function Home() {
   return (
-    <AuthWrapper>
     <div className="flex flex-col  min-h-screen">
       <header className="px-4 border-b-2 lg:px-6 h-14 flex items-center">
         <Link className="flex items-center justify-center" href="#">
@@ -181,6 +179,5 @@ export default function Home() {
         </nav>
       </footer>
     </div>
-    </AuthWrapper>
   )
 }

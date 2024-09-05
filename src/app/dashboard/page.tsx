@@ -1,4 +1,4 @@
-"use client";
+"use client"
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { Brain } from "lucide-react";
@@ -12,18 +12,24 @@ import {
 } from "@/components/ui/card";
 import MemoriesTable from "@/components/MemoriesTable";
 import { Memory } from "@/types/types";
-import { AuthWrapper } from "@/app/authwrapper";
-import { useSession,signOut } from "next-auth/react";
+import { useSession,signOut, SessionProvider } from "next-auth/react";
 import axios from "axios";
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import { redirect } from "next/navigation";
 
-export default function DashboardPage({
-  searchParams,
-}: {
-  searchParams: { page: string };
-}) {
-  const page = Number(searchParams.page) || 1;
-  const { data: session, status } = useSession();
+export const dynamic = 'force-dynamic'
+
+export default function DashboardPage() {
+  // const page = Number(searchParams.page) || 1;
+  const { data: session} = useSession(
+    {
+      required: true,
+      onUnauthenticated() {
+        redirect("/");
+      },
+    }
+  );
+
   const [memories, setMemories] = useState<Memory[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
@@ -73,7 +79,7 @@ export default function DashboardPage({
   };
 
   return (
-    <AuthWrapper requireAuth redirectTo="/">
+    <SessionProvider>
       <div className="flex  flex-col min-h-screen">
         <header className="px-4 border-b-2 lg:px-6 h-14 flex items-center">
           <Link className="flex items-center justify-center" href="#">
@@ -150,6 +156,6 @@ export default function DashboardPage({
           </nav>
         </footer>
       </div>
-    </AuthWrapper>
-  );
+      </SessionProvider>
+        );
 }

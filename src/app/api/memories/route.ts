@@ -1,12 +1,14 @@
 
 import { NextResponse } from "next/server";
 import { createClient } from "@supabase/supabase-js";
-import { UUID } from "crypto";
-import { getServerSession } from "next-auth"
+import { auth } from "@/auth"
 import { authOptions } from "@/lib/auth";
 
+export const runtime = "edge";
+
 export async function GET(request: Request) {
-  const session = await getServerSession(authOptions);
+  // const session = await getServerSession(authOptions);
+  const session = await auth();
   if(!session){
     return NextResponse.json({ error: "Access Denied" }, { status: 403 });
   }
@@ -43,7 +45,7 @@ export async function GET(request: Request) {
 }
 
 export async function DELETE(request: Request) {
-  const session = await getServerSession(authOptions);
+  const session = await auth();
   if(!session){
     return NextResponse.json({ error: "Access Denied" }, { status: 403 });
   }

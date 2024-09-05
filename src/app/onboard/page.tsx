@@ -1,19 +1,13 @@
-
-"use client"
-import { useEffect, useCallback } from 'react'
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
 import { Brain, MessageCircle, Zap, HelpCircle } from "lucide-react"
 import Link from "next/link"
 import TelegramLoginButton from '@/components/LoginButton'
-import { AuthWrapper } from '@/app/authwrapper'
 
-// Replace with your actual Telegram bot username
 
 export default function OnboardingPage() {
   return (
-    <AuthWrapper>
     <div className="flex flex-col min-h-screen">
       <header className="px-4 lg:px-6 h-14 flex items-center">
         <Link className="flex items-center justify-center" href="/">
@@ -202,6 +196,5 @@ export default function OnboardingPage() {
         </nav>
       </footer>
     </div>
-    </AuthWrapper>
   )
 }

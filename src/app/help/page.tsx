@@ -5,7 +5,7 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 import { Brain, MessageCircle, Zap} from "lucide-react"
 import Link from "next/link"
 
-export const runtime = "edge";
+// export const runtime = "edge";
 
 export default function Component() {
     return (
