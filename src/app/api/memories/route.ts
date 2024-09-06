@@ -2,7 +2,6 @@
 import { NextResponse } from "next/server";
 import { createClient } from "@supabase/supabase-js";
 import { auth } from "@/auth"
-import { authOptions } from "@/lib/auth";
 
 export const runtime = "edge";
 

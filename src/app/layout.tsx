@@ -5,6 +5,7 @@ import { Bricolage_Grotesque } from 'next/font/google'
 import { Space_Mono } from 'next/font/google'
 import { cn } from '@/lib/utils'
 import "./globals.css";
+import image from "../../public/og.jpg"
 
 // const inter = Inter({ subsets: ["latin"] });
 
@@ -29,8 +30,20 @@ const fontBody = Space_Mono({
 
 
 export const metadata: Metadata = {
-  title: "MindR",
-  description: "Never loose any memory again",
+  title: "MindR - Your thoughts, always within reach",
+  description: "Add you thoughts, ideas and memories to one place and retrieve them through AI  ",
+  openGraph:{
+    title: "MindR",
+      description:"Your thoughts, always within reach",
+    images:[
+      {
+        url: "https://auth5.mindr-ayu.pages.dev/open-graph.jpg",
+        width: 1200,
+				height: 627,
+				alt: "MindR- Your AI powered second brain on telegram.",
+      },
+    ],
+  }
 };
 
 export default function RootLayout({

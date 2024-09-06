@@ -6,6 +6,8 @@ import { auth, signOut } from "@/auth";
 import { redirect } from "next/navigation";
 // import { authOptions } from "../api/auth/[...nextauth]/route";
 
+export const runtime = 'edge';
+
 export default async function DashboardPage() {
   const session = await auth();
 
