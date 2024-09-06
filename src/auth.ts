@@ -95,6 +95,7 @@ export const { auth, handlers: { GET, POST }, signIn, signOut }
         session.user.id = token.id;
         session.user.username = token.username;
       }
+      console.log("session: ",session);
       return session;
     },
   },
@@ -103,7 +104,6 @@ export const { auth, handlers: { GET, POST }, signIn, signOut }
     error: "/auth/error",
     signOut:"/"
   },
-  debug: true,
 });
 
 function getFinalDataStr(authDataMap: Map<string, string>) {
