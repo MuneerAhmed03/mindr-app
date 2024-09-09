@@ -1,4 +1,5 @@
-import React, { useEffect,useRef } from 'react'
+"use client"
+import React, { useEffect,useRef,useState } from 'react'
 import { signIn } from 'next-auth/react'
 
 interface TelegramUser {
@@ -27,6 +28,7 @@ declare global {
 
 const TelegramLoginButton: React.FC = () => {
     const containerRef=useRef<HTMLDivElement>(null);
+    const [isLoading,setIsLoading]=useState(true);
   useEffect(() => {
     const script = document.createElement('script')
     script.src = 'https://telegram.org/js/telegram-widget.js?22'
@@ -43,7 +45,7 @@ const TelegramLoginButton: React.FC = () => {
     const onAuth = async (user: any) => {
             try {
               console.log('Telegram user data:', user);
-              const object = await signIn('credentials', { ...user, redirect: false });
+              const object = await signIn('credentials', { ...user, callback: '/dashboard', redirect:true });
               console.log('SignIn result:', object);
               // Handle successful sign-in here 
             } catch (error) {
@@ -54,7 +56,9 @@ const TelegramLoginButton: React.FC = () => {
     if(containerRef.current){
         containerRef.current.appendChild(script);
     }
-
+    script.onload=()=>{
+      setIsLoading(false);
+    }
     return () => {
         if (containerRef.current) {
           const scriptElement = containerRef.current.querySelector('script');
@@ -66,7 +70,15 @@ const TelegramLoginButton: React.FC = () => {
       }
   }, [])
 
-  return <div ref={containerRef} id="telegram-login" />
+  return (
+  <>{isLoading && (
+    <div className="animate-pulse flex flex-col items-center">
+              <div className="h-6 bg-gray-300 rounded w-3/4 mb-2"></div>
+            </div>
+  )}
+  <div ref={containerRef} id="telegram-login" />
+  </>
+  )
 }
 
 export default TelegramLoginButton

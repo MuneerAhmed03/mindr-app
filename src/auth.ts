@@ -1,9 +1,7 @@
-import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
-import { verify, webcrypto } from "crypto";
 import { createClient } from "@supabase/supabase-js";
+import NextAuth from "next-auth"
 
-const subtle = webcrypto.subtle;
 const encoder = new TextEncoder();
 
 const supabase = createClient(process.env.SB_URL!, process.env.SB_KEY!);
@@ -14,7 +12,9 @@ if (!botToken) {
   throw new Error("TELEGRAM_BOT_TOKEN is not set in environment variables");
 }
 
-export const authOptions = {
+export const { auth, handlers: { GET, POST }, signIn, signOut } 
+  = NextAuth({
+    trustHost: true,
   providers: [
     CredentialsProvider({
       name: "Credentials",
@@ -30,17 +30,18 @@ export const authOptions = {
         authMap.delete("json");
         authMap.delete("callbackUrl");
         authMap.delete("redirect");
+        authMap.delete("callback");
 
         const datacheckstring = getFinalDataStr(authMap);
 
-        console.log(datacheckstring);
+        console.log("datacheck", datacheckstring);
 
         const secretKey = await getSecretKey();
         const signature = new Uint8Array(
           hashString.match(/[\da-f]{2}/gi)?.map((h) => parseInt(h, 16)) || []
         );
 
-        const isValid = await subtle.verify(
+        const isValid = await crypto.subtle.verify(
           "HMAC",
           secretKey,
           signature,
@@ -58,13 +59,13 @@ export const authOptions = {
           .upsert(
             dataObj,
             { onConflict: "id",
-              ignoreDuplicates:false
-             },
+              ignoreDuplicates: false
+            },
           )
-          
+
         if(error){
-          console.log(error);
-        }  
+          console.log("db error", error);
+        }
 
         const tobeReturned = {
           id: dataObj.id,
@@ -94,18 +95,19 @@ export const authOptions = {
         session.user.id = token.id;
         session.user.username = token.username;
       }
+      console.log("session: ",session);
       return session;
     },
   },
   pages: {
-    signIn: "/signUp",
+    signIn: "/onboard",
     error: "/auth/error",
+    signOut:"/"
   },
-  debug: true, // Enable debug mode to log additional details
-};
+});
 
-function getFinalDataStr(authDataMap: Map<string, string | number>) {
-  const dataToCheck: Array<string> = [];
+function getFinalDataStr(authDataMap: Map<string, string>) {
+  const dataToCheck: string[] = [];
 
   authDataMap.forEach((value, key) => {
     dataToCheck.push(`${key}=${value}`);
@@ -117,8 +119,8 @@ function getFinalDataStr(authDataMap: Map<string, string | number>) {
 }
 
 async function getSecretKey() {
-  const secret = await subtle.digest("SHA-256", encoder.encode(botToken));
-  return await subtle.importKey(
+  const secret = await crypto.subtle.digest("SHA-256", encoder.encode(botToken));
+  return await crypto.subtle.importKey(
     "raw",
     secret,
     { name: "HMAC", hash: "SHA-256" },
@@ -127,59 +129,10 @@ async function getSecretKey() {
   );
 }
 
-function hasExpired(authData: Map<string, string | number>) {
+function hasExpired(authData: Map<string, string>) {
   const authDate = Number(authData.get("auth_date"));
   const now = Math.floor(Date.now() / 1000);
   const dataAge = now - authDate;
 
   return dataAge > 86400;
 }
-
-// export const authOptions = {
-//     providers: [
-//         CredentialsProvider({
-//             name:'Telegram',
-//             credentials:{} ,
-
-//             authorize: async (credentials) =>{
-//                 // const {hash,...data}=credentials as TelegramCredentials;
-//                 const authMap = new Map(Object.entries(credentials as Record<string,string> ));
-//                 const checkStirng = Object.keys(data).sort().map(key => `${key}=${data[key as keyof typeof data]}`).join('\n');
-
-//                 const secretKey =  crypto.createHash('sha256').update(botToken).digest();
-//                 const hmac = crypto.createHmac('sha256',secretKey).update(checkStirng).digest(`hex`);
-
-//                 if (hmac === hash) {
-//                     return {
-//                       id: data.id,
-//                       name: `${data.first_name} ${data.last_name || ''}`.trim(),
-//                       image: data.photo_url,
-//                       username: data.username
-//                     }
-//                   }
-
-//                 return null;
-//             }
-//         })
-//     ],
-//     callbacks:{
-//         jwt : async ({token,user}:any) =>{
-//             if(user){
-//                 token.id =user.id;
-//                 token.username=user.user.username;
-//             }
-//             return token
-//         },
-//         session : async ({session,token}:any)=>{
-//             if (token) {
-//                 session.user.id = token.id
-//               }
-//               return session
-//         }
-//     },
-//     pages: {
-//       signIn: '/signUp',
-//       error: '/auth/error',
-//     },
-//     debug: process.env.NODE_ENV === 'development',
-// }
