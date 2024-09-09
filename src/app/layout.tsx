@@ -37,13 +37,21 @@ export const metadata: Metadata = {
       description:"Your thoughts, always within reach",
     images:[
       {
-        url: "https://auth5.mindr-ayu.pages.dev/open-graph.jpg",
+        url: "https://mindr-ayu.pages.dev/open-graph.jpg",
         width: 1200,
 				height: 627,
 				alt: "MindR- Your AI powered second brain on telegram.",
       },
     ],
-  }
+    
+  },
+  keywords :[
+    'second brain',
+    'ai bot',
+    'telegram bot',
+    'rag',
+    'memories'
+  ]
 };
 
 export default function RootLayout({
