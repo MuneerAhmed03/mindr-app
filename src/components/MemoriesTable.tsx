@@ -80,10 +80,12 @@ export default function MemoriesTable() {
     setCurrentPage(newPage);
   };
 
-  const deleteMemory = useCallback(async (id: number) => {
-    try {
-      const response = await axios.delete(`/api/memories?id=${id}`);
-      if (response.status === 200) {
+    const deleteMemory = useCallback(async (id: number) => {
+      try {
+        const response = await axios.delete(`/api/memories`,{
+          data : {memory_id : id.toString()}
+        });
+      if (response.status === 204) {
         setMemories(prevMemories => prevMemories.filter(memory => memory.id !== id));
         toast.success("Memory deleted successfully");
       }
@@ -130,13 +132,13 @@ export default function MemoriesTable() {
             <TableCell>
               <Dialog>
                 <DialogTrigger asChild>
-                  <Button variant="link" className="p-0 h-auto">
+                  <Button variant="link" className="p-0 h-auto text-[#ccffff]">
                     {truncateText(memory.text, 50)}
                   </Button>
                 </DialogTrigger>
                 <DialogContent>
                   <DialogHeader>
-                    <DialogTitle>Memory Details</DialogTitle>
+                    <DialogTitle>Memory</DialogTitle>
                     <DialogDescription>
                       {memory.text}
                     </DialogDescription>

@@ -45,28 +45,30 @@ export async function GET(request: Request) {
 
 export async function DELETE(request: Request) {
   const session = await auth();
-  if(!session){
+  if (!session) {
     return NextResponse.json({ error: "Access Denied" }, { status: 403 });
   }
   
   const supabase = createClient(process.env.SB_URL!, process.env.SB_KEY!);
-
-  const data : {memory_id:string} = await request.json()
-
-  try{const {memory_id}=data;
-  const response = await supabase
-  .from('memory')
-  .delete()
-  .eq('memory_id',memory_id);
-
-  return NextResponse.json({"message" : response.statusText}
-    ,{status:response.status});
-  }catch(error){
-    console.log("Error deleting memories",error);
-  return NextResponse.json(
-    {error: "failed to fetch memories"},
-    {status: 500}
-  );
+  
+  const data: { memory_id: string } = await request.json()
+  
+  try {
+    const { memory_id } = data;
+    const { error } = await supabase
+      .from('memory')
+      .delete()
+      .eq('memory_id', memory_id);
+    
+    if (error) throw error;
+    
+    // If deletion is successful, return a 204 No Content response
+    return new Response(null, { status: 204 });
+  } catch (error) {
+    console.log("Error deleting memories", error);
+    return NextResponse.json(
+      { error: "Failed to delete memory" },
+      { status: 500 }
+    );
   }
 }
-
