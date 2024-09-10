@@ -37,6 +37,15 @@ export default function MemoriesTable() {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPage, setTotalPage] = useState(1);
   const [error, setError] = useState<boolean>(false);
+  const [viewportWidth, setViewportWidth] = useState(window.innerWidth);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setViewportWidth(window.innerWidth);
+    };
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   const fetchMemories = async (page: number) => {
     setIsLoading(true);
@@ -133,7 +142,7 @@ export default function MemoriesTable() {
               <Dialog>
                 <DialogTrigger asChild>
                   <Button variant="link" className="p-0 h-auto text-[#ccffff]">
-                    {truncateText(memory.text, 50)}
+                    {truncateText(memory.text, viewportWidth < 768 ? 15 : 50)}
                   </Button>
                 </DialogTrigger>
                 <DialogContent>
@@ -191,9 +200,6 @@ export default function MemoriesTable() {
               <ChevronLeft className="h-4 w-4 mr-2" />
               Previous
             </Button>
-            <span>
-              Page {currentPage} of {totalPage}
-            </span>
             <Button
               variant="outline"
               size="sm"
