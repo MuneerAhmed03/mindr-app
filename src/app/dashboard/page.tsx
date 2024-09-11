@@ -18,7 +18,7 @@ export default async function DashboardPage() {
   return (
     <div className="flex flex-col min-h-screen">
       <header className="px-4 border-b-2 lg:px-6 h-14 flex items-center">
-        <Link className="flex items-center justify-center" href="#">
+        <Link className="flex items-center justify-center" href="/">
           <Brain className="h-6 w-6" />
           <span className="ml-2 text-lg font-semibold">MindR</span>
         </Link>

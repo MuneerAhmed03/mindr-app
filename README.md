@@ -1,68 +1,101 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`c3`](https://developers.cloudflare.com/pages/get-started/c3).
+# [MindR Web Application](https://mindrbot.pages.dev/)
 
-## Getting Started
+![open-graph](https://github.com/user-attachments/assets/58aca34f-9cfd-48c0-a0d0-acfd6973f13d)
 
-First, run the development server:
+MindR Web App is a companion application to the MindR Telegram bot. It provides a user-friendly interface for managing your stored memories. With this web app, users can easily onboard, view their stored memories, and delete them as needed.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## Features
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- User authentication (including Telegram login)
+- Onboarding process for new users
+- View and manage stored memories
+- Delete unwanted memories
+- Seamless integration with the MindR Telegram bot
 
-## Cloudflare integration
+## Tech Stack
 
-Besides the `dev` script mentioned above `c3` has added a few extra scripts that allow you to integrate the application with the [Cloudflare Pages](https://pages.cloudflare.com/) environment, these are:
-  - `pages:build` to build the application for Pages using the [`@cloudflare/next-on-pages`](https://github.com/cloudflare/next-on-pages) CLI
-  - `preview` to locally preview your Pages application using the [Wrangler](https://developers.cloudflare.com/workers/wrangler/) CLI
-  - `deploy` to deploy your Pages application using the [Wrangler](https://developers.cloudflare.com/workers/wrangler/) CLI
+- **Framework**: Next.js
+- **Deployment**: Cloudflare Pages
+- **Authentication**: Auth.js v5
+- **Database**: Supabase PostgreSQL (shared with Telegram bot)
 
-> __Note:__ while the `dev` script is optimal for local development you should preview your Pages application as well (periodically or before deployments) in order to make sure that it can properly work in the Pages environment (for more details see the [`@cloudflare/next-on-pages` recommended workflow](https://github.com/cloudflare/next-on-pages/blob/main/internal-packages/next-dev/README.md#recommended-development-workflow))
+## Setup Instructions
 
-### Bindings
+### Prerequisites
 
-Cloudflare [Bindings](https://developers.cloudflare.com/pages/functions/bindings/) are what allows you to interact with resources available in the Cloudflare Platform.
+- Node.js and npm installed on your system
+- A [Cloudflare](https://www.cloudflare.com/) account
+- A [Supabase](https://supabase.com/) account (same as used for the Telegram bot)
+- OAuth credentials (e.g., Google, GitHub) for Auth.js
+- Your Telegram Bot Token
 
-You can use bindings during development, when previewing locally your application and of course in the deployed application:
+### Steps
 
-- To use bindings in dev mode you need to define them in the `next.config.js` file under `setupDevBindings`, this mode uses the `next-dev` `@cloudflare/next-on-pages` submodule. For more details see its [documentation](https://github.com/cloudflare/next-on-pages/blob/05b6256/internal-packages/next-dev/README.md).
+1. Clone the repository:
+   ```
+   git clone https://github.com/yourusername/mindr-webapp.git
+   cd mindr-webapp
+   ```
 
-- To use bindings in the preview mode you need to add them to the `pages:preview` script accordingly to the `wrangler pages dev` command. For more details see its [documentation](https://developers.cloudflare.com/workers/wrangler/commands/#dev-1) or the [Pages Bindings documentation](https://developers.cloudflare.com/pages/functions/bindings/).
+2. Install dependencies:
+   ```
+   npm install
+   ```
 
-- To use bindings in the deployed application you will need to configure them in the Cloudflare [dashboard](https://dash.cloudflare.com/). For more details see the  [Pages Bindings documentation](https://developers.cloudflare.com/pages/functions/bindings/).
+3. Set up environment variables:
+   Create a `.env.local` file in the root directory and add the following:
+   ```
+   NEXTAUTH_URL=http://localhost:3000
+   NEXTAUTH_SECRET=your_nextauth_secret
+   SUPABASE_URL=your_supabase_project_url
+   SUPABASE_ANON_KEY=your_supabase_anon_key
+   TELEGRAM_BOT_TOKEN=your_telegram_bot_token
 
-#### KV Example
+   ```
 
-`c3` has added for you an example showing how you can use a KV binding.
+4. Set up Auth.js:
+   - Configure Auth.js in `pages/api/auth/[...nextauth].js`
+   - Set up the necessary OAuth providers
 
-In order to enable the example:
-- Search for javascript/typescript lines containing the following comment:
-  ```ts
-  // KV Example:
-  ```
-  and uncomment the commented lines below it.
-- Do the same in the `wrangler.toml` file, where
-  the comment is:
-  ```
-  # KV Example:
-  ```
-- If you're using TypeScript run the `cf-typegen` script to update the `env.d.ts` file:
-  ```bash
-  npm run cf-typegen
-  # or
-  yarn cf-typegen
-  # or
-  pnpm cf-typegen
-  # or
-  bun cf-typegen
-  ```
+5. Configure Telegram Login:
+   - Go to [@BotFather](https://t.me/BotFather) on Telegram
+   - Send the command `/setdomain`
+   - Select your bot
+   - Enter your web app's domain (e.g., `yourapp.pages.dev` if using Cloudflare Pages)
+   - BotFather will confirm that the domain has been set for your bot
 
-After doing this you can run the `dev` or `preview` script and visit the `/api/hello` route to see the example in action.
+6. Setup Telegram Login to your Auth.js  for custom configuration (optional):
+   Update your `pages/api/auth/[...nextauth].js` file.
 
-Finally, if you also want to see the example work in the deployed application make sure to add a `MY_KV_NAMESPACE` binding to your Pages application in its [dashboard kv bindings settings section](https://dash.cloudflare.com/?to=/:account/pages/view/:pages-project/settings/functions#kv_namespace_bindings_section). After having configured it make sure to re-deploy your application.
+7. Run the development server:
+   ```
+   npm run dev
+   ```
+
+8. Build the project:
+   ```
+   npm run build
+   ```
+
+9. Deploy to Cloudflare Pages:
+   - Connect your GitHub repository to Cloudflare Pages
+   - Set up the build configuration:
+     - Build command: `npm run build`
+     - Build output directory: `.next`
+   - Add your environment variables in the Cloudflare Pages dashboard
+
+## Usage
+
+1. Visit the deployed web app URL
+2. Sign in using your preferred method (including Telegram)
+3. Complete the onboarding process if you're a new user
+4. View your stored memories from the dashboard
+5. Delete any unwanted memories
+
+## Integration with Telegram Bot
+
+The web app shares the same Supabase database as the Telegram bot. This allows for seamless integration between the two platforms. Memories stored via the Telegram bot will be visible in the web app, and vice versa. Users can log in with their Telegram account, ensuring a consistent experience across both platforms.
+
+## Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
