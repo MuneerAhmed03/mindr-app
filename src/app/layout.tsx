@@ -5,9 +5,8 @@ import { Bricolage_Grotesque } from 'next/font/google'
 import { Space_Mono } from 'next/font/google'
 import { cn } from '@/lib/utils'
 import "./globals.css";
-import image from "../../public/og.jpg"
+import Provider from "@/app/provider"
 
-// const inter = Inter({ subsets: ["latin"] });
 
 const fontHeading = Bricolage_Grotesque({
   subsets: ['latin'],
@@ -34,7 +33,7 @@ export const metadata: Metadata = {
   description: "Add you thoughts, ideas and memories to one place and retrieve them through AI  ",
   openGraph:{
     title: "MindR",
-      description:"Your thoughts, always within reach",
+      description:"Your thoughts always within reach",
     images:[
       {
         url: "https://mindr-ayu.pages.dev/open-graph.jpg",
@@ -60,7 +59,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" >
     <body 
       className={cn(
         'antialiased',
@@ -68,7 +67,9 @@ export default function RootLayout({
         fontBody.variable
       )}
     >
+      <Provider>
           {children}
+          </Provider>
     </body>
   </html>
   );
