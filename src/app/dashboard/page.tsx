@@ -33,6 +33,7 @@ export default async function DashboardPage() {
             action={async () => {
               "use server";
               await signOut();
+              redirect("/");
             }}
           >
             <Button variant="outline" size="sm" type="submit">

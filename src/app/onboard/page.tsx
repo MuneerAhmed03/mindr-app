@@ -97,7 +97,6 @@ export default function OnboardingPage() {
             </div>
           </div>
         </section>
-        {/* Rest of the sections remain unchanged */}
         <section className="w-full flex felx-col items-center justify-center py-12 md:py-24 lg:py-32 bg-gray-100 dark:bg-gray-800">
           <div className="container px-4 md:px-6">
             <h2 className="text-2xl font-bold tracking-tighter sm:text-3xl md:text-4xl mb-8 text-center">
@@ -176,7 +175,7 @@ export default function OnboardingPage() {
                 </p>
               </div>
               <Button className="bg-primary text-primary-foreground">
-                <Link href= {`/`} target="_blank" rel="noopener noreferrer">
+                <Link href= {`/`} >
                   Start Using MindR
                 </Link>
               </Button>

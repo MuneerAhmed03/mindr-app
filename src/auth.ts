@@ -20,7 +20,7 @@ export const { auth, handlers: { GET, POST }, signIn, signOut }
       name: "Credentials",
       credentials: {},
       authorize: async (credentials) => {
-        console.log("Received credentials:", credentials);
+        // console.log("Received credentials:", credentials);
         const authMap = new Map(
           Object.entries(credentials as Record<string, string>)
         );
@@ -34,7 +34,7 @@ export const { auth, handlers: { GET, POST }, signIn, signOut }
 
         const datacheckstring = getFinalDataStr(authMap);
 
-        console.log("datacheck", datacheckstring);
+        // console.log("datacheck", datacheckstring);
 
         const secretKey = await getSecretKey();
         const signature = new Uint8Array(
@@ -64,7 +64,7 @@ export const { auth, handlers: { GET, POST }, signIn, signOut }
           )
 
         if(error){
-          console.log("db error", error);
+          // console.log("db error", error);
         }
 
         const tobeReturned = {
@@ -72,7 +72,7 @@ export const { auth, handlers: { GET, POST }, signIn, signOut }
           username: dataObj.first_name,
         };
 
-        console.log(tobeReturned);
+        // console.log(tobeReturned);
 
         return {
           id: dataObj.id,

@@ -44,12 +44,11 @@ const TelegramLoginButton: React.FC = () => {
 
     const onAuth = async (user: any) => {
             try {
-              console.log('Telegram user data:', user);
+              // console.log('Telegram user data:', user);
               const object = await signIn('credentials', { ...user, callback: '/dashboard', redirect:true });
-              console.log('SignIn result:', object);
-              // Handle successful sign-in here 
+              // console.log('SignIn result:', object);
             } catch (error) {
-              console.error('Error during sign-in:', error);
+              // console.error('Error during sign-in:', error);
             }
           };
     window.onTelegramAuth = onAuth

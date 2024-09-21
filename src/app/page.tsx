@@ -1,9 +1,9 @@
-import Link from "next/link"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Brain, MessageCircle, Zap, Clock, Star } from "lucide-react"
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Brain, MessageCircle, Zap, Clock, Star } from "lucide-react";
 
-// export const runtime = "edge";
+export const runtime = "edge";
 
 export default function Home() {
   return (
@@ -14,13 +14,22 @@ export default function Home() {
           <span className="ml-2 text-lg font-semibold">MindR</span>
         </Link>
         <nav className="ml-auto flex gap-4 sm:gap-6">
-          <Link className="text-sm font-medium hover:underline underline-offset-4" href="#features">
+          <Link
+            className="text-sm font-medium hover:underline underline-offset-4"
+            href="#features"
+          >
             Features
           </Link>
-          <Link className="text-sm font-medium hover:underline underline-offset-4" href="#how-it-works">
+          <Link
+            className="text-sm font-medium hover:underline underline-offset-4"
+            href="#how-it-works"
+          >
             How It Works
           </Link>
-          <Link className="text-sm hidden font-medium hover:underline underline-offset-4" href="#testimonials">
+          <Link
+            className="text-sm hidden font-medium hover:underline underline-offset-4"
+            href="#testimonials"
+          >
             Testimonials
           </Link>
         </nav>
@@ -34,27 +43,29 @@ export default function Home() {
                   Your Second Brain, Now on Telegram
                 </h1>
                 <p className="mx-auto max-w-[700px] text-gray-500 md:text-xl dark:text-gray-400">
-                  Boost your productivity and never forget important information with MindR, your AI-powered second brain on Telegram.
+                  Boost your productivity and never forget important information
+                  with MindR, your AI-powered second brain on Telegram.
                 </p>
               </div>
               <div className="space-x-4">
                 <Button className="bg-primary text-primary-foreground">
-                <Link href= {`/onboard`} target="_blank" rel="noopener noreferrer">
-                Get Started
-                </Link>
+                  <Link href={`/onboard`}>Get Started</Link>
                 </Button>
                 <Button variant="outline">
-                <Link href= "#features" >
-                Learn More
-                </Link>
+                  <Link href="#features">Learn More</Link>
                 </Button>
               </div>
             </div>
           </div>
         </section>
-        <section id="features" className="w-full flex felx-col items-center justify-center py-12 md:py-24 lg:py-32 bg-gray-100 dark:bg-gray-800">
+        <section
+          id="features"
+          className="w-full flex felx-col items-center justify-center py-12 md:py-24 lg:py-32 bg-gray-100 dark:bg-gray-800"
+        >
           <div className="container px-4 md:px-6">
-            <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl text-center mb-12">Features</h2>
+            <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl text-center mb-12">
+              Features
+            </h2>
             <div className="grid gap-6 lg:grid-cols-3 lg:gap-12">
               <Card>
                 <CardHeader>
@@ -64,7 +75,8 @@ export default function Home() {
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
-                  Chat with your second brain as naturally as you would with a friend. MindR understands context and nuance.
+                  Chat with your second brain as naturally as you would with a
+                  friend. MindR understands context and nuance.
                 </CardContent>
               </Card>
               <Card>
@@ -75,7 +87,8 @@ export default function Home() {
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
-                  Quickly retrieve any information you've stored, from important dates to complex ideas, in seconds.
+                  Quickly retrieve any information you've stored, from important
+                  dates to complex ideas, in seconds.
                 </CardContent>
               </Card>
               <Card>
@@ -86,30 +99,48 @@ export default function Home() {
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
-                  Save hours of searching through notes or emails. MindR organizes and retrieves information efficiently.
+                  Save hours of searching through notes or emails. MindR
+                  organizes and retrieves information efficiently.
                 </CardContent>
               </Card>
             </div>
           </div>
         </section>
-        <section id="how-it-works" className="w-full flex felx-col items-center justify-center py-12 md:py-24 lg:py-32">
+        <section
+          id="how-it-works"
+          className="w-full flex felx-col items-center justify-center py-12 md:py-24 lg:py-32"
+        >
           <div className="container px-4 md:px-6">
-            <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl text-center mb-12">How It Works</h2>
+            <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl text-center mb-12">
+              How It Works
+            </h2>
             <ol className="grid gap-6 lg:grid-cols-3 lg:gap-12">
               <li className="flex flex-col items-center text-center">
-                <div className="flex h-10 w-10 items-center justify-center rounded-full bg-primary text-primary-foreground">1</div>
+                <div className="flex h-10 w-10 items-center justify-center rounded-full bg-primary text-primary-foreground">
+                  1
+                </div>
                 <h3 className="mt-4 text-xl font-semibold">Connect</h3>
-                <p className="mt-2 text-gray-500 dark:text-gray-400">Add MindR to your Telegram and start chatting.</p>
+                <p className="mt-2 text-gray-500 dark:text-gray-400">
+                  Add MindR to your Telegram and start chatting.
+                </p>
               </li>
               <li className="flex flex-col items-center text-center">
-                <div className="flex h-10 w-10 items-center justify-center rounded-full bg-primary text-primary-foreground">2</div>
+                <div className="flex h-10 w-10 items-center justify-center rounded-full bg-primary text-primary-foreground">
+                  2
+                </div>
                 <h3 className="mt-4 text-xl font-semibold">Store</h3>
-                <p className="mt-2 text-gray-500 dark:text-gray-400">Send information you want to remember to MindR.</p>
+                <p className="mt-2 text-gray-500 dark:text-gray-400">
+                  Send information you want to remember to MindR.
+                </p>
               </li>
               <li className="flex flex-col items-center text-center">
-                <div className="flex h-10 w-10 items-center justify-center rounded-full bg-primary text-primary-foreground">3</div>
+                <div className="flex h-10 w-10 items-center justify-center rounded-full bg-primary text-primary-foreground">
+                  3
+                </div>
                 <h3 className="mt-4 text-xl font-semibold">Retrieve</h3>
-                <p className="mt-2 text-gray-500 dark:text-gray-400">Ask MindR anything, anytime, and get instant answers.</p>
+                <p className="mt-2 text-gray-500 dark:text-gray-400">
+                  Ask MindR anything, anytime, and get instant answers.
+                </p>
               </li>
             </ol>
           </div>
@@ -159,10 +190,13 @@ export default function Home() {
                   Ready to Supercharge Your Memory?
                 </h2>
                 <p className="mx-auto max-w-[600px] text-gray-500 md:text-xl dark:text-gray-400">
-                  Start using MindR today and experience the power of having a second brain at your fingertips.
+                  Start using MindR today and experience the power of having a
+                  second brain at your fingertips.
                 </p>
               </div>
-              <Button className="bg-primary text-primary-foreground">Get Started Now</Button>
+              <Button className="bg-primary text-primary-foreground">
+                <Link href={`/onboard`}>Get Started Now</Link>
+              </Button>
             </div>
           </div>
         </section>
@@ -170,14 +204,20 @@ export default function Home() {
       <footer className="flex flex-col gap-2 sm:flex-row py-6 w-full shrink-0 items-center px-4 md:px-6 border-t">
         <p className="text-xs text-gray-500 dark:text-gray-400">MindR.</p>
         <nav className="sm:ml-auto flex gap-4 sm:gap-6">
-          <Link className="text-xs hover:underline underline-offset-4" href="/tos">
+          <Link
+            className="text-xs hover:underline underline-offset-4"
+            href="/tos"
+          >
             Terms of Service
           </Link>
-          <Link className="text-xs hover:underline underline-offset-4" href="/privacy">
+          <Link
+            className="text-xs hover:underline underline-offset-4"
+            href="/privacy"
+          >
             Privacy
           </Link>
         </nav>
       </footer>
     </div>
-  )
+  );
 }
