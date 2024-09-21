@@ -97,7 +97,7 @@ export default function OnboardingPage() {
             </div>
           </div>
         </section>
-        <section className="w-full flex felx-col items-center justify-center py-12 md:py-24 lg:py-32 bg-gray-100 dark:bg-gray-800">
+        <section id="login" className="w-full flex felx-col items-center justify-center py-12 md:py-24 lg:py-32 bg-gray-100 dark:bg-gray-800">
           <div className="container px-4 md:px-6">
             <h2 className="text-2xl font-bold tracking-tighter sm:text-3xl md:text-4xl mb-8 text-center">
               Get the Most Out of MindR
@@ -175,7 +175,7 @@ export default function OnboardingPage() {
                 </p>
               </div>
               <Button className="bg-primary text-primary-foreground">
-                <Link href= {`/`} >
+                <Link href= "#login" >
                   Start Using MindR
                 </Link>
               </Button>

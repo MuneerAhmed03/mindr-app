@@ -3,7 +3,6 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Brain, MessageCircle, Zap, Clock, Star } from "lucide-react";
 
-export const runtime = "edge";
 
 export default function Home() {
   return (
@@ -48,8 +47,8 @@ export default function Home() {
                 </p>
               </div>
               <div className="space-x-4">
-                <Button className="bg-primary text-primary-foreground">
-                  <Link href={`/onboard`}>Get Started</Link>
+                <Button className="bg-primary text-primary-foreground hover:bg-primary/80">
+                  <Link href={`/onboard`}  prefetch={false}>Get Started</Link>
                 </Button>
                 <Button variant="outline">
                   <Link href="#features">Learn More</Link>
