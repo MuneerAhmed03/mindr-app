@@ -1,9 +1,11 @@
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
 import { Brain, MessageCircle, Zap, HelpCircle } from "lucide-react"
 import Link from "next/link"
 import TelegramLoginButton from '@/components/LoginButton'
+import { GitHubLogoIcon } from '@radix-ui/react-icons'
+import { TwitterIcon } from "@/components/ui/icons";
+
 
 
 export default function OnboardingPage() {
@@ -186,6 +188,16 @@ export default function OnboardingPage() {
       <footer className="flex flex-col gap-2 sm:flex-row py-6 w-full shrink-0 items-center px-4 md:px-6 border-t">
         <p className="text-xs text-gray-500 dark:text-gray-400">MindR.</p>
         <nav className="sm:ml-auto flex gap-4 sm:gap-6">
+        <Link href={`https://github.com/MuneerAhmed03/mindr`} target="_blank" rel="noreferrer"
+            className="flex items-center justify-center hover: p-1"
+          >
+            <GitHubLogoIcon className="w-4 h-4 hover:scale-110" />
+          </Link> 
+          <Link href={`https://x.com/mun_err`} target="_blank" rel="noreferrer"
+            className="flex items-center justify-center hover: p-1"
+          >
+            <TwitterIcon className="w-4 h-4 hover:scale-110" />
+          </Link>
           <Link className="text-xs hover:underline underline-offset-4" href="/tos">
             Terms of Service
           </Link>
