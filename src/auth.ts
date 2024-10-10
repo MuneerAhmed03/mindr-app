@@ -1,10 +1,7 @@
 import CredentialsProvider from "next-auth/providers/credentials";
 import { createClient } from "@supabase/supabase-js";
 import NextAuth from "next-auth"
-
 const encoder = new TextEncoder();
-
-const supabase = createClient(process.env.SB_URL!, process.env.SB_KEY!);
 
 const botToken = process.env.TELEGRAM_BOT_TOKEN;
 
@@ -21,6 +18,8 @@ export const { auth, handlers: { GET, POST }, signIn, signOut }
       credentials: {},
       authorize: async (credentials) => {
         // console.log("Received credentials:", credentials);
+
+        const supabase = createClient(process.env.SB_URL!, process.env.SB_KEY!);
         const authMap = new Map(
           Object.entries(credentials as Record<string, string>)
         );
@@ -54,23 +53,28 @@ export const { auth, handlers: { GET, POST }, signIn, signOut }
 
         const dataObj = Object.fromEntries(authMap.entries());
 
+        const userKeys = ["id","auth_date","created_at"];
+        const userObj = Object.fromEntries(
+          Array.from(authMap.entries()).filter(([key]) => userKeys.includes(key))
+        );
+
         const { error } = await supabase
           .from("users")
           .upsert(
-            dataObj,
+            userObj,
             { onConflict: "id",
               ignoreDuplicates: false
             },
           )
 
         if(error){
-          // console.log("db error", error);
+          console.log("db error", error);
         }
-
-        const tobeReturned = {
-          id: dataObj.id,
-          username: dataObj.first_name,
-        };
+        await supabase.auth.signOut();
+        // const tobeReturned = {
+        //   id: dataObj.id,
+        //   username: dataObj.first_name,
+        // };
 
         // console.log(tobeReturned);
 
@@ -105,7 +109,6 @@ export const { auth, handlers: { GET, POST }, signIn, signOut }
     signOut:"/"
   },
 });
-
 function getFinalDataStr(authDataMap: Map<string, string>) {
   const dataToCheck: string[] = [];
 
@@ -117,7 +120,6 @@ function getFinalDataStr(authDataMap: Map<string, string>) {
 
   return dataToCheck.join(`\n`);
 }
-
 async function getSecretKey() {
   const secret = await crypto.subtle.digest("SHA-256", encoder.encode(botToken));
   return await crypto.subtle.importKey(
@@ -128,7 +130,6 @@ async function getSecretKey() {
     ["sign", "verify"]
   );
 }
-
 function hasExpired(authData: Map<string, string>) {
   const authDate = Number(authData.get("auth_date"));
   const now = Math.floor(Date.now() / 1000);

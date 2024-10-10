@@ -53,3 +53,68 @@ html {
 .loading-icon {
   animation: spin 1s linear infinite;
 }
+/* 
+.wave-pattern {
+  position: relative;
+  isolation: isolate;
+}
+.wave-pattern::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: 
+    repeating-linear-gradient(
+      35deg,
+      #e5e7eb 0px,
+      #e5e7eb 1px,
+      transparent 1px,
+      transparent 20px
+    );
+  opacity: 0.1;
+  z-index: -1;
+  mask-image: radial-gradient(circle at center, black, transparent 80%);
+} */
+
+.wave-pattern {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  background: var(--background);
+}
+
+.wave-pattern::before,
+.wave-pattern::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+}
+
+.wave-pattern::before {
+  background-image:
+    repeating-linear-gradient(
+      35deg,
+      var(--primary) 0px,
+      var(--primary) 1px,
+      transparent 1px,
+      transparent 20px
+    );
+  opacity: 0.1;
+  mask-image: radial-gradient(circle at center, black, transparent 80%);
+}
+
+.wave-pattern::after {
+  background: 
+    radial-gradient(
+      circle at top left,
+      var(--accent) 0%,
+      transparent 60%
+    ),
+    radial-gradient(
+      circle at bottom right,
+      var(--primary) 0%,
+      transparent 60%
+    );
+  opacity: 0.15;
+  mix-blend-mode: soft-light;
+}

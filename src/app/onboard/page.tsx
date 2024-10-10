@@ -12,7 +12,7 @@ import { TwitterIcon } from "@/components/ui/icons";
 export default function OnboardingPage() {
   return (
     <div className="flex flex-col min-h-screen">
-      <header className="px-4 lg:px-6 h-14 flex items-center">
+      <header className="px-4 lg:px-6 h-16 flex items-center backdrop-blur-sm bg-background/30 sticky top-0 z-50 border-b">
         <Link className="flex items-center justify-center" href="/">
           <Brain className="h-6 w-6" />
           <span className="ml-2 text-lg font-semibold">MindR</span>
@@ -106,30 +106,33 @@ export default function OnboardingPage() {
               Get the Most Out of MindR
             </h2>
             <div className="grid gap-6 lg:grid-cols-2 lg:gap-12">
-              <Card>
-                <CardContent className="mt-4">
-                  <h3 className="text-xl font-semibold mb-2">Organize with Tags</h3>
-                  <p>Use #tags when saving information to create categories for easy retrieval later.</p>
-                </CardContent>
-              </Card>
-              <Card>
-                <CardContent className="mt-4">
-                  <h3 className="text-xl font-semibold mb-2">Interactive Dashboard</h3>
-                  <p>Manage, review and update your stored information through dashboard to keep it current and relevant.</p>
-                </CardContent>
-              </Card>
-              <Card>
-                <CardContent className="mt-4">
-                  <h3 className="text-xl font-semibold mb-2">Combine Information</h3>
-                  <p>Ask MindR to connect different pieces of information for new insights.</p>
-                </CardContent>
-              </Card>
-              <Card>
-                <CardContent className="mt-4">
-                  <h3 className="text-xl font-semibold mb-2">Store Prefrences</h3>
-                  <p>Tell MindR about your personal prefrences to get personalised response.</p>
-                </CardContent>
-              </Card>
+            {[
+                {
+                  title: "Organize with Tags",
+                  description: "Use #tags when saving information to create categories for easy retrieval later."
+                },
+                {
+                  title: "Interactive Dashboard",
+                  description: "Manage, review and update your stored information to keep it current and relevant."
+                },
+                {
+                  title: "Combine Information",
+                  description: "Ask MindR to connect different pieces of information for new insights."
+                },
+                {
+                  title: "Store Preferences",
+                  description: "Tell MindR about your personal preferences to get personalized responses."
+                }
+              ].map((feature, index) => (
+                <Card key={index} className="group hover:shadow-xl transition-all duration-300">
+                  <CardContent className="p-6">
+                    <h3 className="text-xl font-semibold mb-2 group-hover:text-primary transition-colors">
+                      {feature.title}
+                    </h3>
+                    <p className="text-gray-500 dark:text-gray-400">{feature.description}</p>
+                  </CardContent>
+                </Card>
+              ))}
             </div>
           </div>
         </section>
@@ -177,7 +180,7 @@ export default function OnboardingPage() {
                   Start using MindR today and experience the power of having a second brain at your fingertips.
                 </p>
               </div>
-              <Button className="bg-primary text-primary-foreground">
+              <Button className="bg-primary text-primary-foreground hover:bg-primary/90 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl  px-8 py-3">
                 <Link href= "#login" >
                   Start Using MindR
                 </Link>

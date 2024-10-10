@@ -49,7 +49,10 @@ export const metadata: Metadata = {
     'ai bot',
     'telegram bot',
     'rag',
-    'memories'
+    'memories',
+    'mindr',
+    'mindR',
+    'MindR'
   ]
 };
 
@@ -68,7 +71,9 @@ export default function RootLayout({
       )}
     >
       <Provider>
+      <div className="wave-pattern">
           {children}
+          </div>
           </Provider>
     </body>
   </html>
