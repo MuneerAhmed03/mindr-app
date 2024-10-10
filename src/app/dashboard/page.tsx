@@ -32,6 +32,9 @@ export default async function DashboardPage() {
           >
             Help
           </Link>
+          <Link className="text-sm font-medium hover:underline underline-offset-4" href="/sponsor">
+            Support 💜
+          </Link>
           <form
             action={async () => {
               "use server";

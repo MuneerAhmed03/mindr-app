@@ -14,6 +14,9 @@ function Layout({ children }: { children: React.ReactNode }) {
             <Link className="text-sm font-medium hover:underline underline-offset-4" href="/">
               Home
             </Link>
+            <Link className="text-sm font-medium hover:underline underline-offset-4" href="/sponsor">
+            Sponsor
+          </Link>
             {/* <Link className="text-sm font-medium hover:underline underline-offset-4" href="#faq">
               FAQ
             </Link> */}

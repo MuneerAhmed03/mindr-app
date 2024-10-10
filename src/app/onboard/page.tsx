@@ -24,6 +24,9 @@ export default function OnboardingPage() {
           <Link className="text-sm font-medium hover:underline underline-offset-4" href="#faq">
             FAQ
           </Link>
+          <Link className="text-sm font-medium hover:underline underline-offset-4" href="/sponsor">
+          Support
+          </Link>
         </nav>
       </header>
       <main className="flex-col items-center ">
