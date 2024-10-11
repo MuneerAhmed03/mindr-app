@@ -1,4 +1,4 @@
 export type Memory = {
-    id: number
-    text: string
-  }
+  id: number;
+  text: string;
+};

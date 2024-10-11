@@ -1,7 +1,7 @@
-'use client'
-import { useState, useEffect, useCallback } from 'react'
-import { Trash2, ChevronLeft, ChevronRight } from "lucide-react"
-import { Button } from "@/components/ui/button"
+"use client";
+import { useState, useEffect, useCallback } from "react";
+import { Trash2, ChevronLeft, ChevronRight } from "lucide-react";
+import { Button } from "@/components/ui/button";
 import {
   Table,
   TableBody,
@@ -9,7 +9,7 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table"
+} from "@/components/ui/table";
 import {
   Dialog,
   DialogContent,
@@ -17,19 +17,19 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/components/ui/dialog"
+} from "@/components/ui/dialog";
 import {
   Card,
   CardContent,
   CardHeader,
   CardTitle,
   CardFooter,
-} from "@/components/ui/card"
-import { Memory } from '@/types/types'
-import Skeleton, { SkeletonTheme } from 'react-loading-skeleton'
-import 'react-loading-skeleton/dist/skeleton.css'
-import axios from "axios"
-import toast, { Toaster } from "react-hot-toast"
+} from "@/components/ui/card";
+import { Memory } from "@/types/types";
+import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
+import axios from "axios";
+import toast, { Toaster } from "react-hot-toast";
 
 export default function MemoriesTable() {
   const [memories, setMemories] = useState<Memory[]>([]);
@@ -43,8 +43,8 @@ export default function MemoriesTable() {
     const handleResize = () => {
       setViewportWidth(window.innerWidth);
     };
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
   }, []);
 
   const fetchMemories = async (page: number) => {
@@ -89,24 +89,28 @@ export default function MemoriesTable() {
     setCurrentPage(newPage);
   };
 
-    const deleteMemory = useCallback(async (id: number) => {
-      try {
-        const response = await axios.delete(`/api/memories`,{
-          data : {memory_id : id.toString()}
-        });
+  const deleteMemory = useCallback(async (id: number) => {
+    try {
+      const response = await axios.delete(`/api/memories`, {
+        data: { memory_id: id.toString() },
+      });
       if (response.status === 204) {
-        setMemories(prevMemories => prevMemories.filter(memory => memory.id !== id));
+        setMemories((prevMemories) =>
+          prevMemories.filter((memory) => memory.id !== id),
+        );
         toast.success("Memory deleted successfully");
       }
     } catch (error) {
-      console.error('Failed to delete memory:', error)
+      console.error("Failed to delete memory:", error);
       toast.error("Failed to delete memory. Please try again.");
     }
-  }, [])
+  }, []);
 
   const truncateText = useCallback((text: string, maxLength: number) => {
-    return text.length > maxLength ? text.substring(0, maxLength) + "..." : text
-  }, [])
+    return text.length > maxLength
+      ? text.substring(0, maxLength) + "..."
+      : text;
+  }, []);
 
   const renderTableContent = () => {
     if (isLoading) {
@@ -114,24 +118,30 @@ export default function MemoriesTable() {
         <TableBody>
           {Array.from({ length: 5 }).map((_, index) => (
             <TableRow key={index}>
-              <SkeletonTheme baseColor='#05172b' highlightColor='#062547'>
-                <TableCell><Skeleton width={400} /></TableCell>
-                <TableCell><Skeleton width={50} /></TableCell>
+              <SkeletonTheme baseColor="#05172b" highlightColor="#062547">
+                <TableCell>
+                  <Skeleton width={400} />
+                </TableCell>
+                <TableCell>
+                  <Skeleton width={50} />
+                </TableCell>
               </SkeletonTheme>
             </TableRow>
           ))}
         </TableBody>
-      )
+      );
     }
 
     if (memories.length === 0) {
       return (
         <TableBody>
           <TableRow>
-            <TableCell colSpan={3} className="text-center">You do not have any saved memories yet!!</TableCell>
+            <TableCell colSpan={3} className="text-center">
+              You do not have any saved memories yet!!
+            </TableCell>
           </TableRow>
         </TableBody>
-      )
+      );
     }
 
     return (
@@ -148,9 +158,7 @@ export default function MemoriesTable() {
                 <DialogContent>
                   <DialogHeader>
                     <DialogTitle>Memory</DialogTitle>
-                    <DialogDescription>
-                      {memory.text}
-                    </DialogDescription>
+                    <DialogDescription>{memory.text}</DialogDescription>
                   </DialogHeader>
                 </DialogContent>
               </Dialog>
@@ -168,8 +176,8 @@ export default function MemoriesTable() {
           </TableRow>
         ))}
       </TableBody>
-    )
-  }
+    );
+  };
 
   return (
     <>
@@ -213,5 +221,5 @@ export default function MemoriesTable() {
         </CardFooter>
       </Card>
     </>
-  )
+  );
 }

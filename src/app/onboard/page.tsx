@@ -1,13 +1,22 @@
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
-import { Brain, MessageCircle, Zap, HelpCircle } from "lucide-react"
-import Link from "next/link"
-import TelegramLoginButton from '@/components/LoginButton'
-import { GitHubLogoIcon } from '@radix-ui/react-icons'
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+  CardDescription,
+} from "@/components/ui/card";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
+import { Brain, MessageCircle, Zap, HelpCircle } from "lucide-react";
+import Link from "next/link";
+import TelegramLoginButton from "@/components/LoginButton";
+import { GitHubLogoIcon } from "@radix-ui/react-icons";
 import { TwitterIcon } from "@/components/ui/icons";
-
-
 
 export default function OnboardingPage() {
   return (
@@ -18,14 +27,23 @@ export default function OnboardingPage() {
           <span className="ml-2 text-lg font-semibold">MindR</span>
         </Link>
         <nav className="ml-auto flex gap-4 sm:gap-6">
-          <Link className="text-sm font-medium hover:underline underline-offset-4" href="/">
+          <Link
+            className="text-sm font-medium hover:underline underline-offset-4"
+            href="/"
+          >
             Home
           </Link>
-          <Link className="text-sm font-medium hover:underline underline-offset-4" href="#faq">
+          <Link
+            className="text-sm font-medium hover:underline underline-offset-4"
+            href="#faq"
+          >
             FAQ
           </Link>
-          <Link className="text-sm font-medium hover:underline underline-offset-4" href="/sponsor">
-          Support
+          <Link
+            className="text-sm font-medium hover:underline underline-offset-4"
+            href="/sponsor"
+          >
+            Support
           </Link>
         </nav>
       </header>
@@ -36,23 +54,27 @@ export default function OnboardingPage() {
               Welcome to MindR
             </h1>
             <p className="mx-auto max-w-[700px] text-gray-500 md:text-xl dark:text-gray-400 text-center mb-12">
-              Let's get you set up with your new AI-powered second brain on Telegram.
+              Let's get you set up with your new AI-powered second brain on
+              Telegram.
             </p>
             <div className="flex justify-center mb-12">
-        <Card className="w-full max-w-md">
-          <CardHeader>
-            <CardTitle className="text-2xl text-center">Login to MindR</CardTitle>
-            <CardDescription className="text-center">
-              Connect with Telegram to access your second brain
-            </CardDescription>
-          </CardHeader>
-          <CardContent className='flex flex-col items-center justify-center'>
-              <TelegramLoginButton/>
-              <p className="text-sm text-gray-500 dark:text-gray-400 text-center mt-4">
-                By logging in with Telegram, you'll be able to seamlessly interact with MindR and access all your stored information.
-              </p>
-          </CardContent>
-        </Card>
+              <Card className="w-full max-w-md">
+                <CardHeader>
+                  <CardTitle className="text-2xl text-center">
+                    Login to MindR
+                  </CardTitle>
+                  <CardDescription className="text-center">
+                    Connect with Telegram to access your second brain
+                  </CardDescription>
+                </CardHeader>
+                <CardContent className="flex flex-col items-center justify-center">
+                  <TelegramLoginButton />
+                  <p className="text-sm text-gray-500 dark:text-gray-400 text-center mt-4">
+                    By logging in with Telegram, you'll be able to seamlessly
+                    interact with MindR and access all your stored information.
+                  </p>
+                </CardContent>
+              </Card>
             </div>
             <div className="grid gap-6 lg:grid-cols-3 lg:gap-12">
               <Card>
@@ -94,7 +116,9 @@ export default function OnboardingPage() {
                 </CardHeader>
                 <CardContent>
                   <ul className="list-disc list-inside space-y-2">
-                    <li>Ask MindR questions about stored info using "/ask" command</li>
+                    <li>
+                      Ask MindR questions about stored info using "/ask" command
+                    </li>
                     <li>MindR will provide relevant answers instantly</li>
                     <li>Use Dashboard to organize your memories</li>
                   </ul>
@@ -103,36 +127,48 @@ export default function OnboardingPage() {
             </div>
           </div>
         </section>
-        <section id="login" className="w-full flex felx-col items-center justify-center py-12 md:py-24 lg:py-32 bg-gray-100 dark:bg-gray-800">
+        <section
+          id="login"
+          className="w-full flex felx-col items-center justify-center py-12 md:py-24 lg:py-32 bg-gray-100 dark:bg-gray-800"
+        >
           <div className="container px-4 md:px-6">
             <h2 className="text-2xl font-bold tracking-tighter sm:text-3xl md:text-4xl mb-8 text-center">
               Get the Most Out of MindR
             </h2>
             <div className="grid gap-6 lg:grid-cols-2 lg:gap-12">
-            {[
+              {[
                 {
                   title: "Organize with Tags",
-                  description: "Use #tags when saving information to create categories for easy retrieval later."
+                  description:
+                    "Use #tags when saving information to create categories for easy retrieval later.",
                 },
                 {
                   title: "Interactive Dashboard",
-                  description: "Manage, review and update your stored information to keep it current and relevant."
+                  description:
+                    "Manage, review and update your stored information to keep it current and relevant.",
                 },
                 {
                   title: "Combine Information",
-                  description: "Ask MindR to connect different pieces of information for new insights."
+                  description:
+                    "Ask MindR to connect different pieces of information for new insights.",
                 },
                 {
                   title: "Store Preferences",
-                  description: "Tell MindR about your personal preferences to get personalized responses."
-                }
+                  description:
+                    "Tell MindR about your personal preferences to get personalized responses.",
+                },
               ].map((feature, index) => (
-                <Card key={index} className="group hover:shadow-xl transition-all duration-300">
+                <Card
+                  key={index}
+                  className="group hover:shadow-xl transition-all duration-300"
+                >
                   <CardContent className="p-6">
                     <h3 className="text-xl font-semibold mb-2 group-hover:text-primary transition-colors">
                       {feature.title}
                     </h3>
-                    <p className="text-gray-500 dark:text-gray-400">{feature.description}</p>
+                    <p className="text-gray-500 dark:text-gray-400">
+                      {feature.description}
+                    </p>
                   </CardContent>
                 </Card>
               ))}
@@ -180,39 +216,50 @@ export default function OnboardingPage() {
                   Ready to Boost Your Productivity?
                 </h2>
                 <p className="mx-auto max-w-[600px] text-gray-500 md:text-xl dark:text-gray-400">
-                  Start using MindR today and experience the power of having a second brain at your fingertips.
+                  Start using MindR today and experience the power of having a
+                  second brain at your fingertips.
                 </p>
               </div>
               <Button className="bg-primary text-primary-foreground hover:bg-primary/90 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl  px-8 py-3">
-                <Link href= "#login" >
-                  Start Using MindR
-                </Link>
+                <Link href="#login">Start Using MindR</Link>
               </Button>
             </div>
           </div>
         </section>
-      </main>     
+      </main>
       <footer className="flex flex-col gap-2 sm:flex-row py-6 w-full shrink-0 items-center px-4 md:px-6 border-t">
         <p className="text-xs text-gray-500 dark:text-gray-400">MindR.</p>
         <nav className="sm:ml-auto flex items-center justify-center gap-4 sm:gap-6">
-        <Link href={`https://github.com/MuneerAhmed03/mindr`} target="_blank" rel="noreferrer"
+          <Link
+            href={`https://github.com/MuneerAhmed03/mindr`}
+            target="_blank"
+            rel="noreferrer"
             className="flex items-center justify-center hover: p-1"
           >
             <GitHubLogoIcon className="w-4 h-4 hover:scale-110" />
-          </Link> 
-          <Link href={`https://x.com/mun_err`} target="_blank" rel="noreferrer"
+          </Link>
+          <Link
+            href={`https://x.com/mun_err`}
+            target="_blank"
+            rel="noreferrer"
             className="flex items-center justify-center hover: p-1"
           >
             <TwitterIcon className="w-4 h-4 hover:scale-110" />
-          </Link> 
-          <Link className="text-xs hover:underline underline-offset-4" href="/tos">
+          </Link>
+          <Link
+            className="text-xs hover:underline underline-offset-4"
+            href="/tos"
+          >
             Terms of Service
           </Link>
-          <Link className="text-xs hover:underline underline-offset-4" href="/privacy">
+          <Link
+            className="text-xs hover:underline underline-offset-4"
+            href="/privacy"
+          >
             Privacy
           </Link>
         </nav>
       </footer>
     </div>
-  )
+  );
 }

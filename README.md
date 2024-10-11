@@ -32,18 +32,21 @@ MindR Web App is a companion application to the MindR Telegram bot. It provides 
 ### Steps
 
 1. Clone the repository:
+
    ```
    git clone https://github.com/yourusername/mindr-webapp.git
    cd mindr-webapp
    ```
 
 2. Install dependencies:
+
    ```
    npm install
    ```
 
 3. Set up environment variables:
    Create a `.env.local` file in the root directory and add the following:
+
    ```
    NEXTAUTH_URL=http://localhost:3000
    NEXTAUTH_SECRET=your_nextauth_secret
@@ -54,25 +57,29 @@ MindR Web App is a companion application to the MindR Telegram bot. It provides 
    ```
 
 4. Set up Auth.js:
+
    - Configure Auth.js in `pages/api/auth/[...nextauth].js`
    - Set up the necessary OAuth providers
 
 5. Configure Telegram Login:
+
    - Go to [@BotFather](https://t.me/BotFather) on Telegram
    - Send the command `/setdomain`
    - Select your bot
    - Enter your web app's domain (e.g., `yourapp.pages.dev` if using Cloudflare Pages)
    - BotFather will confirm that the domain has been set for your bot
 
-6. Setup Telegram Login to your Auth.js  for custom configuration (optional):
+6. Setup Telegram Login to your Auth.js for custom configuration (optional):
    Update your `pages/api/auth/[...nextauth].js` file.
 
 7. Run the development server:
+
    ```
    npm run dev
    ```
 
 8. Build the project:
+
    ```
    npm run build
    ```

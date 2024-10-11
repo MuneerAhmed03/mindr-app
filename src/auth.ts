@@ -1,6 +1,6 @@
 import CredentialsProvider from "next-auth/providers/credentials";
 import { createClient } from "@supabase/supabase-js";
-import NextAuth from "next-auth"
+import NextAuth from "next-auth";
 const encoder = new TextEncoder();
 
 const botToken = process.env.TELEGRAM_BOT_TOKEN;
@@ -9,9 +9,13 @@ if (!botToken) {
   throw new Error("TELEGRAM_BOT_TOKEN is not set in environment variables");
 }
 
-export const { auth, handlers: { GET, POST }, signIn, signOut } 
-  = NextAuth({
-    trustHost: true,
+export const {
+  auth,
+  handlers: { GET, POST },
+  signIn,
+  signOut,
+} = NextAuth({
+  trustHost: true,
   providers: [
     CredentialsProvider({
       name: "Credentials",
@@ -21,7 +25,7 @@ export const { auth, handlers: { GET, POST }, signIn, signOut }
 
         const supabase = createClient(process.env.SB_URL!, process.env.SB_KEY!);
         const authMap = new Map(
-          Object.entries(credentials as Record<string, string>)
+          Object.entries(credentials as Record<string, string>),
         );
         const hashString = authMap.get("hash") || "";
         authMap.delete("hash");
@@ -37,14 +41,14 @@ export const { auth, handlers: { GET, POST }, signIn, signOut }
 
         const secretKey = await getSecretKey();
         const signature = new Uint8Array(
-          hashString.match(/[\da-f]{2}/gi)?.map((h) => parseInt(h, 16)) || []
+          hashString.match(/[\da-f]{2}/gi)?.map((h) => parseInt(h, 16)) || [],
         );
 
         const isValid = await crypto.subtle.verify(
           "HMAC",
           secretKey,
           signature,
-          encoder.encode(datacheckstring)
+          encoder.encode(datacheckstring),
         );
 
         if (!isValid || hasExpired(authMap)) {
@@ -53,21 +57,18 @@ export const { auth, handlers: { GET, POST }, signIn, signOut }
 
         const dataObj = Object.fromEntries(authMap.entries());
 
-        const userKeys = ["id","auth_date","created_at"];
+        const userKeys = ["id", "auth_date", "created_at"];
         const userObj = Object.fromEntries(
-          Array.from(authMap.entries()).filter(([key]) => userKeys.includes(key))
+          Array.from(authMap.entries()).filter(([key]) =>
+            userKeys.includes(key),
+          ),
         );
 
         const { error } = await supabase
           .from("users")
-          .upsert(
-            userObj,
-            { onConflict: "id",
-              ignoreDuplicates: false
-            },
-          )
+          .upsert(userObj, { onConflict: "id", ignoreDuplicates: false });
 
-        if(error){
+        if (error) {
           console.log("db error", error);
         }
         await supabase.auth.signOut();
@@ -99,14 +100,14 @@ export const { auth, handlers: { GET, POST }, signIn, signOut }
         session.user.id = token.id;
         session.user.username = token.username;
       }
-      console.log("session: ",session);
+      console.log("session: ", session);
       return session;
     },
   },
   pages: {
     signIn: "/onboard",
     error: "/auth/error",
-    signOut:"/"
+    signOut: "/",
   },
 });
 function getFinalDataStr(authDataMap: Map<string, string>) {
@@ -121,13 +122,16 @@ function getFinalDataStr(authDataMap: Map<string, string>) {
   return dataToCheck.join(`\n`);
 }
 async function getSecretKey() {
-  const secret = await crypto.subtle.digest("SHA-256", encoder.encode(botToken));
+  const secret = await crypto.subtle.digest(
+    "SHA-256",
+    encoder.encode(botToken),
+  );
   return await crypto.subtle.importKey(
     "raw",
     secret,
     { name: "HMAC", hash: "SHA-256" },
     true,
-    ["sign", "verify"]
+    ["sign", "verify"],
   );
 }
 function hasExpired(authData: Map<string, string>) {

@@ -40,14 +40,23 @@ html {
     @apply bg-background text-foreground font-body;
   }
 
-  h1, h2, h3, h4, h5, h6 {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
     @apply font-heading;
   }
 }
 
 @keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 .loading-icon {
@@ -91,30 +100,24 @@ html {
 }
 
 .wave-pattern::before {
-  background-image:
-    repeating-linear-gradient(
-      35deg,
-      var(--primary) 0px,
-      var(--primary) 1px,
-      transparent 1px,
-      transparent 20px
-    );
+  background-image: repeating-linear-gradient(
+    35deg,
+    var(--primary) 0px,
+    var(--primary) 1px,
+    transparent 1px,
+    transparent 20px
+  );
   opacity: 0.1;
   mask-image: radial-gradient(circle at center, black, transparent 80%);
 }
 
 .wave-pattern::after {
-  background: 
-    radial-gradient(
+  background: radial-gradient(
       circle at top left,
       var(--accent) 0%,
       transparent 60%
     ),
-    radial-gradient(
-      circle at bottom right,
-      var(--primary) 0%,
-      transparent 60%
-    );
+    radial-gradient(circle at bottom right, var(--primary) 0%, transparent 60%);
   opacity: 0.15;
   mix-blend-mode: soft-light;
 }
