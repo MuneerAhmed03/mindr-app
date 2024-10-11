@@ -20,6 +20,8 @@ jobs:
           path: parent-repo 
 
       - name: Update Frontend Submodule in Parent Repository
+        env:
+            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} 
         run: |
           cd parent-repo  
           git config user.name "GitHub Action"
