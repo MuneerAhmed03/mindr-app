@@ -25,6 +25,10 @@ jobs:
           cd parent-repo  
           git config user.name "GitHub Action"
           git config user.email "action@github.com"
+          git submodule update --init --recursive
+          cd mindr-app
+          git pull origin main
+          cd ..
           git add mindr-app  
           git commit -m "Update frontend submodule to latest commit" --allow-empty  
           git push origin main
