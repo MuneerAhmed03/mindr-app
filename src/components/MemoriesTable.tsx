@@ -1,6 +1,6 @@
 "use client";
 import { useState, useEffect, useCallback } from "react";
-import { Trash2, ChevronLeft, ChevronRight, Book } from "lucide-react";
+import { Trash2, ChevronLeft, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   Table,
@@ -25,7 +25,6 @@ import {
   CardTitle,
   CardFooter,
 } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
 import { Memory } from "@/types/types";
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
@@ -55,7 +54,10 @@ export default function MemoriesTable() {
 
     try {
       const response = await axios.get(`/api/memories`, {
-        params: { from, to },
+        params: {
+          from: from,
+          to: to,
+        },
       });
 
       const { data, count } = response.data;
@@ -69,6 +71,9 @@ export default function MemoriesTable() {
       setTotalPage(Math.ceil((count || 0) / 10));
     } catch (error) {
       console.error("Error fetching memories:", error);
+      if (axios.isAxiosError(error)) {
+        console.error("Axios error response:", error.response);
+      }
       setMemories([]);
       setError(true);
     } finally {
@@ -91,7 +96,7 @@ export default function MemoriesTable() {
       });
       if (response.status === 204) {
         setMemories((prevMemories) =>
-          prevMemories.filter((memory) => memory.id !== id)
+          prevMemories.filter((memory) => memory.id !== id),
         );
         toast.success("Memory deleted successfully");
       }
@@ -112,7 +117,7 @@ export default function MemoriesTable() {
       return (
         <TableBody>
           {Array.from({ length: 5 }).map((_, index) => (
-            <TableRow key={index} className="hover:bg-slate-900/50 transition-colors">
+            <TableRow key={index}>
               <SkeletonTheme baseColor="#05172b" highlightColor="#062547">
                 <TableCell>
                   <Skeleton width={400} />
@@ -131,12 +136,8 @@ export default function MemoriesTable() {
       return (
         <TableBody>
           <TableRow>
-            <TableCell colSpan={3} className="text-center h-32">
-              <div className="flex flex-col items-center justify-center space-y-2">
-                <Book className="h-8 w-8 opacity-50" />
-                <p className="text-lg font-medium">No memories saved yet</p>
-                <p className="text-sm opacity-70">Your memories will appear here once you save them</p>
-              </div>
+            <TableCell colSpan={3} className="text-center">
+              You do not have any saved memories yet!!
             </TableCell>
           </TableRow>
         </TableBody>
@@ -146,25 +147,18 @@ export default function MemoriesTable() {
     return (
       <TableBody>
         {memories.map((memory) => (
-          <TableRow key={memory.id} className="hover:bg-slate-900/50 transition-colors">
+          <TableRow key={memory.id}>
             <TableCell>
               <Dialog>
                 <DialogTrigger asChild>
-                  <Button variant="ghost" className="p-2 h-auto text-[#ccffff] hover:bg-slate-800/50 w-full justify-start">
-                    <span className="truncate">
-                      {truncateText(memory.text, viewportWidth < 768 ? 15 : 50)}
-                    </span>
+                  <Button variant="link" className="p-0 h-auto text-[#ccffff]">
+                    {truncateText(memory.text, viewportWidth < 768 ? 15 : 50)}
                   </Button>
                 </DialogTrigger>
-                <DialogContent className="sm:max-w-[425px]">
+                <DialogContent>
                   <DialogHeader>
-                    <DialogTitle className="flex items-center gap-2">
-                      <Book className="h-5 w-5" />
-                      Memory #{memory.id}
-                    </DialogTitle>
-                    <DialogDescription className="mt-4 text-lg leading-relaxed">
-                      {memory.text}
-                    </DialogDescription>
+                    <DialogTitle>Memory</DialogTitle>
+                    <DialogDescription>{memory.text}</DialogDescription>
                   </DialogHeader>
                 </DialogContent>
               </Dialog>
@@ -174,7 +168,6 @@ export default function MemoriesTable() {
                 variant="ghost"
                 size="icon"
                 onClick={() => deleteMemory(memory.id)}
-                className="hover:bg-red-950/30 hover:text-red-400 transition-colors"
                 aria-label="Delete memory"
               >
                 <Trash2 className="h-4 w-4" />
@@ -189,24 +182,16 @@ export default function MemoriesTable() {
   return (
     <>
       <Toaster position="top-right" />
-      <Card className="border-slate-800">
-        <CardHeader className="space-y-1">
-          <CardTitle className="text-2xl font-bold flex items-center gap-2">
-            <Book className="h-6 w-6" />
-            Saved Memories
-          </CardTitle>
-          {totalPage > 0 && (
-            <Badge variant="secondary" className="w-fit">
-              {memories.length} of {totalPage * 10} memories
-            </Badge>
-          )}
+      <Card>
+        <CardHeader>
+          <CardTitle>Saved Memories</CardTitle>
         </CardHeader>
         <CardContent>
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead className="font-semibold">Memory</TableHead>
-                <TableHead className="w-[100px] font-semibold">Action</TableHead>
+                <TableHead>Memory</TableHead>
+                <TableHead className="w-[100px]">Action</TableHead>
               </TableRow>
             </TableHeader>
             {renderTableContent()}
@@ -219,22 +204,15 @@ export default function MemoriesTable() {
               size="sm"
               disabled={currentPage <= 1 || isLoading}
               onClick={() => handlePageChange(currentPage - 1)}
-              className="hover:bg-slate-800"
             >
               <ChevronLeft className="h-4 w-4 mr-2" />
               Previous
             </Button>
-            {totalPage > 0 && (
-              <span className="text-sm opacity-70">
-                Page {currentPage} of {totalPage}
-              </span>
-            )}
             <Button
               variant="outline"
               size="sm"
               disabled={currentPage >= totalPage || isLoading}
               onClick={() => handlePageChange(currentPage + 1)}
-              className="hover:bg-slate-800"
             >
               Next
               <ChevronRight className="h-4 w-4 ml-2" />
