@@ -18,10 +18,9 @@ jobs:
         with:
           repository: MuneerAhmed03/MindR
           path: parent-repo
+          token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
 
       - name: Update Frontend Submodule in Parent Repository
-        env:
-          GITHUB_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
         run: |
           cd parent-repo  
           git config user.name "GitHub Action"
