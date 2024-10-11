@@ -10,7 +10,7 @@ import { TwitterIcon } from "@/components/ui/icons";
 export default function Home() {
   return (
     <div className="flex flex-col min-h-screen">
-      <header className="px-4 border-b-2 lg:px-6 h-14 flex items-center fixed w-full bg-background/80 backdrop-blur-sm z-50">
+      <header className="px-4 border-b-2 lg:px-6 h-14 flex items-center fixed w-full bg-[#000f1f]/80 backdrop-blur-sm z-50">
         <Link className="flex items-center justify-center" href="#">
           <Brain className="h-6 w-6" />
           <span className="ml-2 text-lg font-semibold">MindR</span>
@@ -67,7 +67,7 @@ export default function Home() {
               repeat: Infinity,
               repeatDelay: 0,
             }}
-            className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-gradient-to-r from-primary/20 to-secondary/20 rounded-full blur-3xl"
+            className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-gradient-to-r from-[#005f8f]/20 to-[#3b515e]/20 rounded-full blur-3xl"
           />
           <motion.div
           initial={{ opacity: 1, y: 20 }}

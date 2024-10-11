@@ -7,7 +7,6 @@ import { redirect } from "next/navigation";
 import { GitHubLogoIcon } from '@radix-ui/react-icons'
 import { TwitterIcon } from "@/components/ui/icons";
 
-// import { authOptions } from "../api/auth/[...nextauth]/route";
 
 export const runtime = 'edge';
 
@@ -32,7 +31,7 @@ export default async function DashboardPage() {
           >
             Help
           </Link>
-          <Link className="text-sm font-medium hover:underline underline-offset-4" href="/sponsor">
+          <Link className="text-sm py-2 font-medium hover:underline underline-offset-4" href="/sponsor">
             Support 💜
           </Link>
           <form
