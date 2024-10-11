@@ -7,6 +7,7 @@ function Page() {
       <div className="max-w-3xl text-white">
         <h1 className="text-3xl font-bold mb-6">Privacy Policy for MindR</h1>
 
+
         <h2 className="text-2xl font-semibold mt-8 mb-4">Introduction</h2>
         <p className="mb-6">
           This Privacy Policy provides detailed information on the handling,
